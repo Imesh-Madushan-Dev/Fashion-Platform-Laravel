@@ -12,6 +12,20 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
-        return $request->expectsJson() ? null : route('login');
+        if ($request->expectsJson()) {
+            return null;
+        }
+
+        // Determine which login route to redirect to based on the URL path
+        $path = $request->path();
+        
+        if (str_starts_with($path, 'designer/') || $path === 'designer') {
+            return route('designer.login');
+        } elseif (str_starts_with($path, 'buyer/') || $path === 'buyer') {
+            return route('buyer.login');
+        }
+        
+        // Default fallback - redirect to buyer login for any unmatched routes
+        return route('buyer.login');
     }
 }

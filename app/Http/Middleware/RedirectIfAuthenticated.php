@@ -21,7 +21,15 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                // Custom redirect based on guard type
+                switch ($guard) {
+                    case 'designer':
+                        return redirect('/designer/dashboard');
+                    case 'buyer':
+                        return redirect('/buyer/dashboard');
+                    default:
+                        return redirect(RouteServiceProvider::HOME);
+                }
             }
         }
 
