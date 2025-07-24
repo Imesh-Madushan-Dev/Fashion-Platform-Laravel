@@ -334,13 +334,15 @@
                                 Confirm Payment
                             </h2>
                             
-                            <form method="POST" action="{{ route('buyer.payment.process', $order) }}" class="space-y-4">
+                            <form method="POST" action="{{ route('buyer.payment.process', $order) }}" class="space-y-4" id="payment-form">
                                 @csrf
                                 
                                 <div class="bg-gray-50 rounded-xl p-4">
                                     <label class="flex items-start cursor-pointer">
                                         <input type="checkbox" 
                                                name="confirm_payment" 
+                                               id="confirm_payment"
+                                               value="1"
                                                class="form-checkbox h-4 w-4 text-green-600 rounded mt-1 mr-3"
                                                {{ old('confirm_payment') ? 'checked' : '' }}
                                                required>
@@ -360,12 +362,17 @@
 
                                 <div class="space-y-3">
                                     <button type="submit" 
-                                            class="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-3 px-6 rounded-xl text-base shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                                            id="pay-button"
+                                            class="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-3 px-6 rounded-xl text-base shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed">
                                         <span class="flex items-center justify-center">
                                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
                                             </svg>
-                                            Pay Now - ${{ number_format($order->total_amount, 2) }}
+                                            <span id="button-text">Pay Now - ${{ number_format($order->total_amount, 2) }}</span>
+                                            <svg class="w-5 h-5 ml-2 animate-spin hidden" id="loading-spinner" fill="none" viewBox="0 0 24 24">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
                                         </span>
                                     </button>
                                     
@@ -419,4 +426,46 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('payment-form');
+    const payButton = document.getElementById('pay-button');
+    const confirmCheckbox = document.getElementById('confirm_payment');
+    const buttonText = document.getElementById('button-text');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    
+    // Initially disable the button
+    payButton.disabled = true;
+    
+    // Enable/disable button based on checkbox state
+    confirmCheckbox.addEventListener('change', function() {
+        payButton.disabled = !this.checked;
+    });
+    
+    // Handle form submission
+    form.addEventListener('submit', function(e) {
+        if (!confirmCheckbox.checked) {
+            e.preventDefault();
+            alert('Please confirm that you want to proceed with the payment.');
+            return false;
+        }
+        
+        // Show loading state
+        payButton.disabled = true;
+        buttonText.style.display = 'none';
+        loadingSpinner.classList.remove('hidden');
+        
+        // Optional: Add a timeout to prevent indefinite loading
+        setTimeout(function() {
+            if (payButton.disabled) {
+                payButton.disabled = false;
+                buttonText.style.display = 'inline';
+                loadingSpinner.classList.add('hidden');
+            }
+        }, 10000); // 10 seconds timeout
+    });
+});
+</script>
+
 @endsection

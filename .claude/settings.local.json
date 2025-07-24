@@ -5,7 +5,9 @@
       "Bash(php artisan make:migration:*)",
       "Bash(php artisan:*)",
       "Bash(php:*)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "Bash(ls:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }

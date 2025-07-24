@@ -56,6 +56,20 @@
             </div>
 
             <div class="grid grid-cols-1 xl:grid-cols-4 gap-8">
+                <!-- Display any session messages -->
+                @if(session('success'))
+                    <div class="xl:col-span-4 mb-6">
+                        <div class="bg-green-50 border border-green-200 text-green-800 px-6 py-4 rounded-xl shadow-sm">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                {{ session('success') }}
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                
                 <!-- Order Confirmation Details -->
                 <div class="xl:col-span-3">
                     <!-- Modern Order Information -->

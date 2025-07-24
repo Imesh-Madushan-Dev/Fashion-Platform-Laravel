@@ -70,32 +70,51 @@ class PaymentController extends Controller
         try {
             DB::beginTransaction();
 
+            // Simulate dummy payment processing delay (optional)
+            // sleep(1); // Uncomment to simulate processing time
+
+            // Log payment attempt
+            \Log::info('Processing dummy payment for order: ' . $order->id . ' by buyer: ' . $buyer->id);
+
             // Process the dummy payment by updating the order status
             $paymentSuccessful = $order->markAsPaid();
 
             if (!$paymentSuccessful) {
-                throw new \Exception('Failed to process payment');
+                throw new \Exception('Failed to mark order as paid - order may already be paid or cancelled');
             }
+
+            // Additional dummy payment gateway simulation
+            $paymentData = [
+                'transaction_id' => 'dummy_' . uniqid(),
+                'amount' => $order->total_amount,
+                'currency' => 'USD',
+                'status' => 'completed',
+                'payment_method' => 'dummy_gateway',
+                'processed_at' => now(),
+            ];
+
+            // In a real application, you would save this payment data to a payments table
+            \Log::info('Dummy payment completed', $paymentData);
 
             DB::commit();
 
-            // Add debug info
-            \Log::info('Payment processed successfully for order: ' . $order->id);
+            // Success log
+            \Log::info('Payment processed successfully for order: ' . $order->id . ' with transaction: ' . $paymentData['transaction_id']);
 
             // Redirect to success page
             return redirect()
                 ->route('buyer.payment.success', $order)
-                ->with('success', 'Payment processed successfully!');
+                ->with('success', 'Payment processed successfully! Transaction ID: ' . $paymentData['transaction_id']);
 
         } catch (\Exception $e) {
             DB::rollBack();
             
-            // Add debug info
+            // Error logging
             \Log::error('Payment processing failed for order: ' . $order->id . ' - Error: ' . $e->getMessage());
             
             return redirect()
                 ->back()
-                ->with('error', 'Payment processing failed. Please try again.')
+                ->with('error', 'Payment processing failed: ' . $e->getMessage() . '. Please try again.')
                 ->withInput();
         }
     }
