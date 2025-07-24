@@ -43,9 +43,15 @@ CREATE TABLE orders (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     buyer_id BIGINT UNSIGNED NOT NULL,
     design_id BIGINT UNSIGNED NOT NULL,
-    status ENUM('pending', 'paid') DEFAULT 'pending',
+    quantity INT DEFAULT 1,
+    unit_price DECIMAL(10,2) NOT NULL,
+    total_amount DECIMAL(10,2) NOT NULL,
+    status ENUM('pending', 'paid', 'confirmed', 'in_progress', 'completed', 'cancelled', 'refunded') DEFAULT 'pending',
+    notes TEXT,
+    ordered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL,
     FOREIGN KEY (buyer_id) REFERENCES buyers(id) ON DELETE CASCADE,
     FOREIGN KEY (design_id) REFERENCES designs(id) ON DELETE CASCADE
 );
