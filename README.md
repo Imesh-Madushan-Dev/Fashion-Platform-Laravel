@@ -1,8 +1,5 @@
 # DesignSphere - Digital Design Marketplace
 
-<p align="center">
-  <img src="public/images/logo.png" alt="DesignSphere Logo" width="200">
-</p>
 
 <p align="center">
   <strong>A Professional Digital Design Marketplace Platform</strong>
@@ -15,6 +12,8 @@
   <img src="https://img.shields.io/badge/MySQL-8.0+-orange.svg" alt="MySQL">
   <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
 </p>
+
+![WhatsApp Image 2025-07-23 at 23 43 13_07b1b8da](https://github.com/user-attachments/assets/3deea7aa-eecb-4d3e-8836-55cee9e53658)
 
 ## 📋 Table of Contents
 
