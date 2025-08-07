@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\DesignerAuthController;
 use App\Http\Controllers\Auth\BuyerAuthController;
 use App\Http\Controllers\DesignController;
+use App\Http\Controllers\DesignerDashboardController;
 use App\Http\Controllers\BuyerDashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
@@ -46,26 +47,19 @@ Route::prefix('designer')->group(function () {
     Route::post('logout', [DesignerAuthController::class, 'logout'])->name('designer.logout');
 
     // Dashboard Route (protected)
-    Route::get('dashboard', function () {
-        return view('designer.dashboard');
-    })->middleware('auth:designer')->name('designer.dashboard');
+    Route::get('dashboard', [DesignerDashboardController::class, 'index'])
+        ->middleware('auth:designer')
+        ->name('designer.dashboard');
 
     // Protected Designer Routes
     Route::middleware('auth:designer')->group(function () {
         // Orders Management
-        Route::get('orders', function () {
-            return view('designer.orders');
-        })->name('designer.orders');
+        Route::get('orders', [DesignerDashboardController::class, 'orders'])->name('designer.orders');
+        Route::patch('orders/{order}/status', [DesignerDashboardController::class, 'updateOrderStatus'])->name('designer.orders.update-status');
         
         // Profile Management
-        Route::get('profile', function () {
-            return view('designer.profile');
-        })->name('designer.profile');
-        
-        Route::put('profile', function () {
-            // This would be handled by a controller in a real app
-            return redirect()->route('designer.profile')->with('success', 'Profile updated successfully!');
-        })->name('designer.profile.update');
+        Route::get('profile', [DesignerDashboardController::class, 'showProfile'])->name('designer.profile');
+        Route::put('profile', [DesignerDashboardController::class, 'updateProfile'])->name('designer.profile.update');
 
         // Design Management Routes
         Route::resource('designs', DesignController::class)->names([

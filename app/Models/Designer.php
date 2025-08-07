@@ -20,6 +20,13 @@ class Designer extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'brand_name',
+        'bio',
+        'portfolio_url',
+        'profile_picture',
+        'is_verified',
+        'is_active',
     ];
 
     /**
@@ -108,6 +115,16 @@ class Designer extends Authenticatable
     public function designs()
     {
         return $this->hasMany(Design::class);
+    }
+
+    /**
+     * Get the full URL for the profile picture.
+     *
+     * @return string|null
+     */
+    public function getProfilePictureUrlAttribute()
+    {
+        return $this->profile_picture ? asset('storage/profile_pictures/' . $this->profile_picture) : null;
     }
 
 }

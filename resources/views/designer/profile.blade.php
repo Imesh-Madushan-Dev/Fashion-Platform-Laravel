@@ -51,8 +51,8 @@
                     <div class="text-center pb-8 border-b border-gray-200/50">
                         <div class="relative inline-block">
                             <div class="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4 ring-4 ring-blue-500/20">
-                                @if(Auth::guard('designer')->user()->profile_picture)
-                                    <img src="{{ Auth::guard('designer')->user()->profile_picture }}" alt="Profile Picture" class="w-full h-full object-cover">
+                                @if(Auth::guard('designer')->user()->profile_picture_url)
+                                    <img src="{{ Auth::guard('designer')->user()->profile_picture_url }}" alt="Profile Picture" class="w-full h-full object-cover">
                                 @else
                                     <div class="w-full h-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
                                         <span class="text-white text-3xl font-bold">{{ substr(Auth::guard('designer')->user()->name, 0, 1) }}</span>
@@ -277,4 +277,22 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const profilePictureInput = document.getElementById('profile_picture');
+    const profilePictureContainer = profilePictureInput.closest('.relative').querySelector('.w-32.h-32');
+    
+    profilePictureInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                profilePictureContainer.innerHTML = `<img src="${e.target.result}" alt="Profile Picture" class="w-full h-full object-cover">`;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
+</script>
 @endsection
