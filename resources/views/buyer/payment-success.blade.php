@@ -101,7 +101,7 @@
                                             Payment Processed Successfully
                                         </h3>
                                         <div class="text-green-700">
-                                            <p class="leading-relaxed">Your payment of <strong class="text-green-800">${{ number_format($order->total_amount, 2) }}</strong> has been processed successfully. The designer will begin working on your order shortly.</p>
+                                            <p class="leading-relaxed">Your payment of <strong class="text-green-800">LKR {{ number_format($order->total_amount, 2) }}</strong> has been processed successfully. The designer will begin working on your order shortly.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -165,7 +165,7 @@
                                                     </svg>
                                                     <span class="text-sm text-gray-600 font-medium">Unit Price</span>
                                                 </div>
-                                                <p class="font-bold text-gray-900 text-lg">${{ number_format($order->unit_price, 2) }}</p>
+                                                <p class="font-bold text-gray-900 text-lg">LKR {{ number_format($order->unit_price, 2) }}</p>
                                             </div>
                                             <div class="bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl p-4 shadow-lg">
                                                 <div class="flex items-center mb-2">
@@ -174,7 +174,7 @@
                                                     </svg>
                                                     <span class="text-sm text-green-100 font-medium">Total Amount</span>
                                                 </div>
-                                                <p class="font-bold text-white text-2xl">${{ number_format($order->total_amount, 2) }}</p>
+                                                <p class="font-bold text-white text-2xl">LKR {{ number_format($order->total_amount, 2) }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -310,7 +310,7 @@
                                     <div class="bg-white rounded-xl p-6 my-6 shadow-sm">
                                         <div class="flex justify-between items-center py-2">
                                             <span class="text-gray-600 font-medium">Unit Price:</span>
-                                            <span class="font-bold text-gray-900">${{ number_format($order->unit_price, 2) }}</span>
+                                            <span class="font-bold text-gray-900">LKR {{ number_format($order->unit_price, 2) }}</span>
                                         </div>
                                         
                                         <div class="flex justify-between items-center py-2 border-b border-gray-100">
@@ -320,7 +320,7 @@
                                         
                                         <div class="flex justify-between items-center pt-4">
                                             <span class="font-bold text-gray-900 text-xl">Total Paid:</span>
-                                            <span class="font-bold text-3xl text-green-600">${{ number_format($order->total_amount, 2) }}</span>
+                                            <span class="font-bold text-3xl text-green-600">LKR {{ number_format($order->total_amount, 2) }}</span>
                                         </div>
                                     </div>
                                 </div>

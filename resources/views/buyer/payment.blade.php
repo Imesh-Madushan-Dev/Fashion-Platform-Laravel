@@ -78,7 +78,7 @@
                         <div class="hidden md:flex items-center space-x-4">
                             <div class="text-right mr-4">
                                 <div class="text-white text-sm font-medium">Order Total</div>
-                                <div class="text-white text-2xl font-bold">${{ number_format($order->total_amount, 2) }}</div>
+                                <div class="text-white text-2xl font-bold">LKR {{ number_format($order->total_amount, 2) }}</div>
                             </div>
                             <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
                                 <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -186,7 +186,7 @@
                                                     </svg>
                                                     <span class="text-sm text-gray-600 font-medium">Unit Price:</span>
                                                 </div>
-                                                <span class="text-lg font-bold text-gray-900 ml-7">${{ number_format($order->unit_price, 2) }}</span>
+                                                <span class="text-lg font-bold text-gray-900 ml-7">LKR {{ number_format($order->unit_price, 2) }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -306,17 +306,17 @@
                                     <div class="bg-white rounded-xl p-3 my-4">
                                         <div class="flex justify-between items-center py-1">
                                             <span class="text-gray-600 text-sm font-medium">Subtotal:</span>
-                                            <span class="font-bold text-gray-900 text-sm">${{ number_format($order->total_amount, 2) }}</span>
+                                            <span class="font-bold text-gray-900 text-sm">LKR {{ number_format($order->total_amount, 2) }}</span>
                                         </div>
                                         
                                         <div class="flex justify-between items-center py-1 border-b border-gray-100">
                                             <span class="text-gray-600 text-sm font-medium">Processing Fee:</span>
-                                            <span class="font-bold text-green-600 text-sm">$0.00</span>
+                                            <span class="font-bold text-green-600 text-sm">LKR 0.00</span>
                                         </div>
                                         
                                         <div class="flex justify-between items-center pt-3">
                                             <span class="font-bold text-gray-900 text-lg">Total:</span>
-                                            <span class="font-bold text-2xl text-blue-600">${{ number_format($order->total_amount, 2) }}</span>
+                                            <span class="font-bold text-2xl text-blue-600">LKR {{ number_format($order->total_amount, 2) }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -351,7 +351,7 @@
                                                 I confirm that I want to proceed with this payment
                                             </span>
                                             <p class="text-xs text-gray-500 mt-1">
-                                                By checking this box, you authorize the payment of ${{ number_format($order->total_amount, 2) }} for this order.
+                                                By checking this box, you authorize the payment of LKR {{ number_format($order->total_amount, 2) }} for this order.
                                             </p>
                                         </div>
                                     </label>
@@ -368,7 +368,7 @@
                                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
                                             </svg>
-                                            <span id="button-text">Pay Now - ${{ number_format($order->total_amount, 2) }}</span>
+                                            <span id="button-text">Pay Now - LKR {{ number_format($order->total_amount, 2) }}</span>
                                             <svg class="w-5 h-5 ml-2 animate-spin hidden" id="loading-spinner" fill="none" viewBox="0 0 24 24">
                                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>

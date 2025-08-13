@@ -68,7 +68,7 @@
                         <div class="hidden md:flex items-center space-x-4">
                             <div class="text-right mr-4">
                                 <div class="text-white text-sm font-medium">Total Amount</div>
-                                <div class="text-white text-2xl font-bold">${{ number_format($totalAmount, 2) }}</div>
+                                <div class="text-white text-2xl font-bold">LKR {{ number_format($totalAmount, 2) }}</div>
                             </div>
                             <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
                                 <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -179,7 +179,7 @@
                                                             </svg>
                                                             <span class="text-sm text-gray-600 font-medium">Unit Price:</span>
                                                         </div>
-                                                        <span class="text-lg font-bold text-gray-900 ml-7">${{ number_format($order->unit_price, 2) }}</span>
+                                                        <span class="text-lg font-bold text-gray-900 ml-7">LKR {{ number_format($order->unit_price, 2) }}</span>
                                                     </div>
                                                     <div class="bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl p-4 shadow-lg">
                                                         <div class="flex items-center">
@@ -188,7 +188,7 @@
                                                             </svg>
                                                             <span class="text-sm text-green-100 font-medium">Total:</span>
                                                         </div>
-                                                        <span class="text-lg font-bold text-white ml-7">${{ number_format($order->total_amount, 2) }}</span>
+                                                        <span class="text-lg font-bold text-white ml-7">LKR {{ number_format($order->total_amount, 2) }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -293,17 +293,17 @@
                                     <div class="bg-white rounded-xl p-3 my-4">
                                         <div class="flex justify-between items-center py-1">
                                             <span class="text-gray-600 text-sm font-medium">Subtotal:</span>
-                                            <span class="font-bold text-gray-900 text-sm">${{ number_format($totalAmount, 2) }}</span>
+                                            <span class="font-bold text-gray-900 text-sm">LKR {{ number_format($totalAmount, 2) }}</span>
                                         </div>
                                         
                                         <div class="flex justify-between items-center py-1 border-b border-gray-100">
                                             <span class="text-gray-600 text-sm font-medium">Processing Fee:</span>
-                                            <span class="font-bold text-green-600 text-sm">$0.00</span>
+                                            <span class="font-bold text-green-600 text-sm">LKR 0.00</span>
                                         </div>
                                         
                                         <div class="flex justify-between items-center pt-3">
                                             <span class="font-bold text-gray-900 text-lg">Total:</span>
-                                            <span class="font-bold text-2xl text-blue-600">${{ number_format($totalAmount, 2) }}</span>
+                                            <span class="font-bold text-2xl text-blue-600">LKR {{ number_format($totalAmount, 2) }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -343,7 +343,7 @@
                                                 I confirm that I want to proceed with this payment
                                             </span>
                                             <p class="text-xs text-gray-500 mt-1">
-                                                By checking this box, you authorize the payment of ${{ number_format($totalAmount, 2) }} for your cart orders.
+                                                By checking this box, you authorize the payment of LKR {{ number_format($totalAmount, 2) }} for your cart orders.
                                             </p>
                                         </div>
                                     </label>
