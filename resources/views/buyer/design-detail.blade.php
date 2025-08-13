@@ -112,7 +112,7 @@
                         <!-- Price Section -->
                         <div class="mb-6">
                             <div class="flex items-baseline space-x-2 mb-2">
-                                <span class="text-3xl font-bold text-gray-900">${{ number_format($design->price, 2) }}</span>
+                                <span class="text-xl font-bold text-gray-900">LKR {{ number_format($design->price, 2) }}</span>
                                 <span class="text-gray-600 text-sm">USD</span>
                             </div>
                             <div class="flex items-center space-x-4 text-sm text-gray-600">
@@ -143,7 +143,7 @@
                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                                         </svg>
-                                        Buy Now - ${{ number_format($design->price, 2) }}
+                                        Buy Now - LKR {{ number_format($design->price, 2) }}
                                     </span>
                                 </button>
                             </form>
@@ -323,7 +323,7 @@
                                     
                                     <!-- Price and Actions -->
                                     <div class="flex items-center justify-between mt-3">
-                                        <span class="text-lg font-bold text-gray-900">${{ number_format($relatedDesign->price, 2) }}</span>
+                                        <span class="text-lg font-bold text-gray-900">LKR {{ number_format($relatedDesign->price, 2) }}</span>
                                         <a href="{{ route('buyer.designs.show', $relatedDesign) }}" 
                                            class="bg-gray-100 hover:bg-blue-100 text-gray-700 hover:text-blue-700 px-3 py-1 rounded-md text-xs font-medium transition-all duration-200 border border-gray-200 hover:border-blue-300">
                                             View
@@ -402,7 +402,7 @@
                                     
                                     <!-- Price and Actions -->
                                     <div class="flex items-center justify-between">
-                                        <span class="text-lg font-bold text-gray-900">${{ number_format($similarDesign->price, 2) }}</span>
+                                        <span class="text-lg font-bold text-gray-900">LKR {{ number_format($similarDesign->price, 2) }}</span>
                                         <a href="{{ route('buyer.designs.show', $similarDesign) }}" 
                                            class="bg-gray-100 hover:bg-green-100 text-gray-700 hover:text-green-700 px-3 py-1 rounded-md text-xs font-medium transition-all duration-200 border border-gray-200 hover:border-green-300">
                                             View

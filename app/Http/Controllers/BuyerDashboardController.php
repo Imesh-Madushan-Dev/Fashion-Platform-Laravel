@@ -18,14 +18,38 @@ class BuyerDashboardController extends Controller
     {
         $buyer = Auth::guard('buyer')->user();
         
+        // Get featured designs
+        $featuredDesigns = Design::with('designer')
+            ->active()
+            ->featured()
+            ->take(6)
+            ->get();
+            
+        // If no featured designs, get recent designs
+        if ($featuredDesigns->isEmpty()) {
+            $featuredDesigns = Design::with('designer')
+                ->active()
+                ->latest()
+                ->take(6)
+                ->get();
+        }
+        
+        // Get buyer's recent orders
+        $recentOrders = $buyer->orders()
+            ->with(['design', 'design.designer'])
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+        
         // Get buyer statistics
         $stats = [
             'total_orders' => $buyer->orders()->count(),
             'total_spent' => $buyer->orders()->where('status', '!=', Order::STATUS_CANCELLED)->sum('total_amount'),
             'pending_orders' => $buyer->orders()->where('status', Order::STATUS_PENDING)->count(),
+            'completed_orders' => $buyer->orders()->where('status', Order::STATUS_COMPLETED)->count(),
         ];
 
-        return view('buyer.dashboard', compact('stats'));
+        return view('buyer.dashboard', compact('featuredDesigns', 'recentOrders', 'stats'));
     }
 
     /**

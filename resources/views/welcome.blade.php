@@ -29,33 +29,7 @@
         </script>
     </head>
     <body class="antialiased bg-white">
-        <!-- Navigation -->
-        <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-lg border-b border-gray-100 z-50 shadow-sm">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-16">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <span class="text-2xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
-                                DesignSphere
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center space-x-4">
-                        <a href="#features" class="text-gray-700 hover:text-purple-600 px-3 py-2 text-sm font-medium transition-colors duration-200">Features</a>
-                        <a href="#how-it-works" class="text-gray-700 hover:text-purple-600 px-3 py-2 text-sm font-medium transition-colors duration-200">How it Works</a>
-                        <div class="flex items-center space-x-2">
-                            <a href="{{ url('/designer/login') }}" class="text-blue-600 hover:text-blue-700 px-4 py-2 text-sm font-medium border border-blue-200 rounded-lg hover:bg-blue-50 transition-all duration-200 hover:shadow-md">
-                                Designer Login
-                            </a>
-                            <a href="{{ url('/buyer/login') }}" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-lg transform hover:scale-105">
-                                Buyer Login
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        @include('components.navigation')
 
         <!-- Hero Section -->
         <section class="relative pt-24 pb-20 min-h-screen flex items-center overflow-hidden">
@@ -90,6 +64,14 @@
                 </p>
                 
                 <div class="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+                    <a href="{{ route('marketplace.index') }}" class="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-10 py-5 rounded-2xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl">
+                        <span class="flex items-center justify-center">
+                            Browse Designs
+                            <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                            </svg>
+                        </span>
+                    </a>
                     <a href="{{ url('/designer/register') }}" class="group bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-10 py-5 rounded-2xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl">
                         <span class="flex items-center justify-center">
                             Start as Designer
@@ -98,33 +80,107 @@
                             </svg>
                         </span>
                     </a>
-                    <a href="{{ url('/buyer/register') }}" class="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-10 py-5 rounded-2xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl">
-                        <span class="flex items-center justify-center">
-                            Shop as Buyer
-                            <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-                            </svg>
-                        </span>
-                    </a>
                 </div>
 
                 <!-- Hero Stats with Enhanced Design -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
                     <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                        <div class="text-5xl font-bold bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent mb-3">1000+</div>
+                        <div class="text-5xl font-bold bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent mb-3">{{ $stats['designers_count'] ?? 0 }}+</div>
                         <div class="text-gray-600 font-medium">Fashion Designers</div>
                         <div class="w-12 h-1 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full mx-auto mt-3"></div>
                     </div>
                     <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                        <div class="text-5xl font-bold bg-gradient-to-r from-pink-600 to-pink-700 bg-clip-text text-transparent mb-3">5000+</div>
+                        <div class="text-5xl font-bold bg-gradient-to-r from-pink-600 to-pink-700 bg-clip-text text-transparent mb-3">{{ $stats['designs_count'] ?? 0 }}+</div>
                         <div class="text-gray-600 font-medium">Unique Designs</div>
                         <div class="w-12 h-1 bg-gradient-to-r from-pink-600 to-pink-700 rounded-full mx-auto mt-3"></div>
                     </div>
                     <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                        <div class="text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mb-3">50K+</div>
+                        <div class="text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mb-3">{{ $stats['buyers_count'] ?? 0 }}+</div>
                         <div class="text-gray-600 font-medium">Happy Buyers</div>
                         <div class="w-12 h-1 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full mx-auto mt-3"></div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products Section -->
+        <section class="py-24 bg-white relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full mb-6">
+                        <span class="text-sm font-semibold bg-gradient-to-r from-purple-700 to-pink-700 bg-clip-text text-transparent">Featured Designs</span>
+                    </div>
+                    <h2 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">Trending Fashion</h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                        Discover the latest fashion trends from our talented designers
+                    </p>
+                </div>
+
+                <!-- Product Grid -->
+                <div id="featured-products" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                    @forelse($featuredDesigns as $design)
+                    <div class="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden">
+                        <div class="aspect-square bg-gradient-to-br from-purple-100 to-pink-100 relative overflow-hidden">
+                            @if($design->image_url)
+                                <img src="{{ $design->image_url }}" alt="{{ $design->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                            @else
+                                <div class="w-full h-full bg-gradient-to-br from-purple-200 to-pink-200 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                            @endif
+                            <div class="absolute top-3 right-3">
+                                <button class="wishlist-btn w-8 h-8 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors duration-200" data-design-id="{{ $design->id }}">
+                                    <svg class="w-4 h-4 text-gray-600 hover:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            @if($design->is_featured)
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-yellow-400 text-yellow-900 text-xs font-semibold px-2 py-1 rounded-full">Featured</span>
+                            </div>
+                            @endif
+                        </div>
+                        <div class="p-6">
+                            <a href="{{ route('marketplace.design.show', $design) }}" class="block group-hover:text-purple-600 transition-colors">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ $design->title }}</h3>
+                            </a>
+                            <p class="text-gray-600 text-sm mb-3">by {{ $design->designer->name }}</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-md font-bold text-purple-600">LKR {{ number_format($design->price, 2) }}</span>
+                                <button class="add-to-cart-btn bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-purple-700 hover:to-pink-700 transition-all duration-200 transform hover:scale-105"
+                                        data-design-id="{{ $design->id }}" 
+                                        data-name="{{ $design->title }}" 
+                                        data-price="{{ $design->price }}" 
+                                        data-image="{{ $design->image_url }}" 
+                                        data-designer="{{ $design->designer->name }}">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    @empty
+                    <!-- No designs available -->
+                    <div class="col-span-full text-center py-12">
+                        <svg class="w-24 h-24 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">No Featured Designs Yet</h3>
+                        <p class="text-gray-600">New designs will appear here once designers start uploading.</p>
+                    </div>
+                    @endforelse
+                </div>
+
+                <!-- View All Button -->
+                <div class="text-center">
+                    <a href="{{ route('marketplace.index') }}" class="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-10 py-4 rounded-2xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl inline-flex items-center">
+                        View All Designs
+                        <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </section>
@@ -602,6 +658,150 @@
                     nav.classList.add('bg-white/80');
                     nav.classList.remove('bg-white/95');
                 }
+            });
+
+            // Shopping Cart functionality
+            let cart = JSON.parse(localStorage.getItem('designCart')) || [];
+            let wishlist = JSON.parse(localStorage.getItem('designWishlist')) || [];
+
+            function updateCartCount() {
+                const cartCount = document.getElementById('cart-count');
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                if (totalItems > 0) {
+                    cartCount.textContent = totalItems;
+                    cartCount.classList.remove('hidden');
+                } else {
+                    cartCount.classList.add('hidden');
+                }
+            }
+
+            function addToCart(productId, productName, productPrice, productImage, designerName, buttonElement) {
+                const existingItem = cart.find(item => item.id === productId);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: productId,
+                        name: productName,
+                        price: productPrice,
+                        image: productImage,
+                        designer: designerName,
+                        quantity: 1
+                    });
+                }
+                localStorage.setItem('designCart', JSON.stringify(cart));
+                updateCartCount();
+                
+                // Update button text and style
+                if (buttonElement) {
+                    const originalText = buttonElement.innerHTML;
+                    buttonElement.innerHTML = '<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Added';
+                    buttonElement.classList.add('bg-green-600', 'hover:bg-green-700');
+                    buttonElement.classList.remove('bg-gradient-to-r', 'from-purple-600', 'to-pink-600', 'hover:from-purple-700', 'hover:to-pink-700');
+                    
+                    // Reset button after 2 seconds
+                    setTimeout(() => {
+                        buttonElement.innerHTML = originalText;
+                        buttonElement.classList.remove('bg-green-600', 'hover:bg-green-700');
+                        buttonElement.classList.add('bg-gradient-to-r', 'from-purple-600', 'to-pink-600', 'hover:from-purple-700', 'hover:to-pink-700');
+                    }, 2000);
+                }
+                
+                // Show success message
+                showNotification('Added to cart successfully!', 'success');
+            }
+
+            function toggleWishlist(productId, productName, productPrice, productImage, designerName) {
+                const existingIndex = wishlist.findIndex(item => item.id === productId);
+                if (existingIndex !== -1) {
+                    wishlist.splice(existingIndex, 1);
+                    showNotification('Removed from wishlist', 'info');
+                } else {
+                    wishlist.push({
+                        id: productId,
+                        name: productName,
+                        price: productPrice,
+                        image: productImage,
+                        designer: designerName
+                    });
+                    showNotification('Added to wishlist!', 'success');
+                }
+                localStorage.setItem('designWishlist', JSON.stringify(wishlist));
+                updateWishlistIcons();
+            }
+
+            function updateWishlistIcons() {
+                document.querySelectorAll('.wishlist-btn').forEach((btn) => {
+                    const designId = btn.getAttribute('data-design-id');
+                    if (designId) {
+                        const isInWishlist = wishlist.some(item => item.id === designId);
+                        const icon = btn.querySelector('svg');
+                        if (isInWishlist) {
+                            icon.setAttribute('fill', 'currentColor');
+                            icon.classList.add('text-red-500');
+                        } else {
+                            icon.setAttribute('fill', 'none');
+                            icon.classList.remove('text-red-500');
+                        }
+                    }
+                });
+            }
+
+            function showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 ${
+                    type === 'success' ? 'bg-green-500 text-white' :
+                    type === 'error' ? 'bg-red-500 text-white' :
+                    'bg-blue-500 text-white'
+                }`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
+
+            // Profile dropdown functionality handled by Alpine.js
+
+            // Add event listeners to cart buttons
+            document.addEventListener('DOMContentLoaded', function() {
+                updateCartCount();
+                updateWishlistIcons();
+
+                // Add to cart buttons
+                document.querySelectorAll('.add-to-cart-btn').forEach((btn) => {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const designId = btn.getAttribute('data-design-id');
+                        const designName = btn.getAttribute('data-name');
+                        const designPrice = parseFloat(btn.getAttribute('data-price'));
+                        const designImage = btn.getAttribute('data-image');
+                        const designerName = btn.getAttribute('data-designer');
+                        
+                        addToCart(designId, designName, designPrice, designImage, designerName, btn);
+                    });
+                });
+
+                // Wishlist buttons
+                document.querySelectorAll('.wishlist-btn').forEach((btn) => {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const designId = btn.getAttribute('data-design-id');
+                        const productCard = btn.closest('.group');
+                        const productName = productCard.querySelector('h3').textContent;
+                        const productPrice = parseFloat(productCard.querySelector('.text-2xl').textContent.replace('$', ''));
+                        const productImage = productCard.querySelector('img')?.src || '';
+                        const designerName = productCard.querySelector('.text-gray-600').textContent.replace('by ', '');
+                        
+                        toggleWishlist(designId, productName, productPrice, productImage, designerName);
+                    });
+                });
+
+                // Cart button functionality is now handled by the link href
             });
         </script>
     </body>

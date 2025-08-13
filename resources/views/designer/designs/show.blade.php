@@ -127,7 +127,7 @@
                 <!-- Price & Quick Actions -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <div class="text-center">
-                        <div class="text-3xl font-bold text-gray-900 mb-2">${{ number_format($design->price, 2) }}</div>
+                        <div class="text-xl font-bold text-gray-900 mb-2">LKR{{ number_format($design->price, 2) }}</div>
                         <p class="text-sm text-gray-500 mb-4">Design Price</p>
                         
                         <div class="space-y-3">

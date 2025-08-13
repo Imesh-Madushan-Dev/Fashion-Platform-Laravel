@@ -1,273 +1,468 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Designer Dashboard - DesignSphere</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800&display=swap" rel="stylesheet" />
 
-@section('nav-links')
-    <span class="text-gray-700">Welcome, {{ Auth::guard('designer')->user()->name }}</span>
-    <form method="POST" action="{{ route('designer.logout') }}" class="inline">
-        @csrf
-        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-sm">
-            Logout
-        </button>
-    </form>
-@endsection
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased bg-gray-50">
+    @include('components.navigation')
 
-@section('content')
-<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-8">
-    <div class="container mx-auto px-4">
-        <!-- Modern Header with Gradient -->
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 shadow-xl mb-8">
-            <div class="absolute inset-0 bg-black/10"></div>
-            <div class="relative px-8 py-12">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h1 class="text-4xl font-bold text-white mb-2">Designer Dashboard</h1>
-                        <p class="text-blue-100 text-lg">Welcome back, {{ Auth::guard('designer')->user()->name }}!</p>
-                        <div class="flex items-center mt-4 space-x-4">
-                            <div class="flex items-center text-blue-100">
-                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                                <span>{{ $designCount ?? 0 }} Designs</span>
-                            </div>
-                            <div class="flex items-center text-blue-100">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                                </svg>
-                                <span>{{ $totalOrders ?? 0 }} Orders</span>
-                            </div>
-                            <div class="flex items-center text-blue-100">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
-                                </svg>
-                                <span>${{ number_format($totalRevenue ?? 0, 2) }} Revenue</span>
-                            </div>
+    <!-- Main Content -->
+    <div class="pt-16 min-h-screen">
+        <!-- Header Section -->
+        <div class="bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="text-center">
+                    <h1 class="text-4xl font-bold text-white mb-4">Welcome back, {{ auth('designer')->user()->name }}! 🎨</h1>
+                    <p class="text-xl text-blue-100 mb-8">Create, manage, and showcase your amazing designs</p>
+                    
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-white">
+                            <div class="text-xl font-bold">{{ $designCount ?? 0 }}</div>
+                            <div class="text-blue-100">Total Designs</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-white">
+                            <div class="text-xl font-bold">{{ $activeDesigns ?? 0 }}</div>
+                            <div class="text-blue-100">Active Designs</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-white">
+                            <div class="text-xl font-bold">{{ $totalOrders ?? 0 }}</div>
+                            <div class="text-blue-100">Total Orders</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-white">
+                            <div class="text-xl font-bold">LKR {{ number_format($totalRevenue ?? 0, 2) }}</div>
+                            <div class="text-blue-100">Revenue</div>
                         </div>
                     </div>
-                    <div class="hidden md:block">
-                        <div class="w-32 h-32 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                            <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions Section -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <a href="{{ route('designer.designs.create') }}" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-6 rounded-2xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105 group">
+                    <div class="flex items-center">
+                        <div class="bg-white/20 p-3 rounded-xl mr-4 group-hover:bg-white/30 transition-colors">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
                         </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Upload Design</h3>
+                            <p class="text-green-100 text-sm">Add new creation</p>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <!-- Decorative Elements -->
-            <div class="absolute top-0 right-0 w-96 h-96 opacity-10">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <path fill="currentColor" d="M40.7,-69.2C48.8,-62.2,48.2,-39.5,54.6,-21.2C61,-2.9,74.4,11,74.1,24.8C73.8,38.6,59.8,52.2,43.9,58.9C28,65.6,10.2,65.4,-7.1,75.5C-24.4,85.6,-41.2,106,-50.6,112.1C-60,118.2,-62,109.9,-62.1,101.9C-62.2,93.9,-60.4,86.2,-62.1,78.2C-63.8,70.2,-69,61.9,-69.9,52.6C-70.8,43.3,-67.4,33,-65.6,22.2C-63.8,11.4,-63.6,0.1,-59.7,-9.3C-55.8,-18.7,-48.2,-26.2,-40.3,-33.5C-32.4,-40.8,-24.2,-47.9,-13.4,-50.7C-2.6,-53.5,10.8,-52,25.7,-48.1C40.6,-44.2,57,-37.9,40.7,-69.2Z" transform="translate(100 100)" class="text-white" />
-                </svg>
-            </div>
-        </div>
+                </a>
 
-        <!-- Modern Quick Actions -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <a href="{{ route('designer.designs.index') }}" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="relative flex items-center text-white">
-                    <div class="flex-shrink-0 w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-                        </svg>
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-bold">Manage Designs</h3>
-                        <p class="text-blue-100 text-sm">View and edit designs</p>
-                    </div>
-                </div>
-            </a>
-
-            <a href="{{ route('designer.designs.create') }}" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-br from-emerald-400 to-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="relative flex items-center text-white">
-                    <div class="flex-shrink-0 w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                        </svg>
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-bold">Upload Design</h3>
-                        <p class="text-emerald-100 text-sm">Add new design</p>
-                    </div>
-                </div>
-            </a>
-
-            <a href="{{ route('designer.orders') }}" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-br from-purple-400 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="relative flex items-center text-white">
-                    <div class="flex-shrink-0 w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-bold">View Orders</h3>
-                        <p class="text-purple-100 text-sm">Track orders</p>
-                    </div>
-                </div>
-            </a>
-
-            <a href="{{ route('designer.profile') }}" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-br from-orange-400 to-orange-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="relative flex items-center text-white">
-                    <div class="flex-shrink-0 w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-bold">Update Profile</h3>
-                        <p class="text-orange-100 text-sm">Edit profile info</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <!-- Enhanced Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white/80 backdrop-blur-sm overflow-hidden shadow-lg rounded-2xl border border-white/20">
-                <div class="p-6">
+                <a href="{{ route('designer.designs.index') }}" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-2xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105 group">
                     <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-500">Total Designs</p>
-                            <p class="text-3xl font-bold text-gray-900">{{ $designCount ?? 0 }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white/80 backdrop-blur-sm overflow-hidden shadow-lg rounded-2xl border border-white/20">
-                <div class="p-6">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-500">Total Orders</p>
-                            <p class="text-3xl font-bold text-gray-900">{{ $totalOrders ?? 0 }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white/80 backdrop-blur-sm overflow-hidden shadow-lg rounded-2xl border border-white/20">
-                <div class="p-6">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-500">Total Revenue</p>
-                            <p class="text-3xl font-bold text-gray-900">${{ number_format($totalRevenue ?? 0, 2) }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modern Profile Info -->
-        <div class="bg-white/80 backdrop-blur-sm overflow-hidden shadow-lg rounded-2xl border border-white/20 mb-8">
-            <div class="px-8 py-6 border-b border-gray-200/50">
-                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                    <svg class="w-6 h-6 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                    </svg>
-                    Profile Information
-                </h2>
-            </div>
-            <div class="p-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="space-y-6">
-                        <div class="flex items-center p-4 bg-gray-50/50 rounded-xl">
-                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
-                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Name</p>
-                                <p class="text-lg font-semibold text-gray-900">{{ Auth::guard('designer')->user()->name }}</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center p-4 bg-gray-50/50 rounded-xl">
-                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mr-4">
-                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Email</p>
-                                <p class="text-lg font-semibold text-gray-900">{{ Auth::guard('designer')->user()->email }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="space-y-6">
-                        @if(Auth::guard('designer')->user()->brand_name)
-                        <div class="flex items-center p-4 bg-gray-50/50 rounded-xl">
-                            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mr-4">
-                                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Brand Name</p>
-                                <p class="text-lg font-semibold text-gray-900">{{ Auth::guard('designer')->user()->brand_name }}</p>
-                            </div>
-                        </div>
-                        @endif
-                        @if(Auth::guard('designer')->user()->phone)
-                        <div class="flex items-center p-4 bg-gray-50/50 rounded-xl">
-                            <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mr-4">
-                                <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Phone</p>
-                                <p class="text-lg font-semibold text-gray-900">{{ Auth::guard('designer')->user()->phone }}</p>
-                            </div>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-                @if(Auth::guard('designer')->user()->portfolio_url || Auth::guard('designer')->user()->bio)
-                <div class="mt-8 pt-6 border-t border-gray-200/50">
-                    @if(Auth::guard('designer')->user()->portfolio_url)
-                    <div class="mb-6">
-                        <p class="text-sm font-medium text-gray-500 mb-2">Portfolio URL</p>
-                        <a href="{{ Auth::guard('designer')->user()->portfolio_url }}" target="_blank" 
-                           class="inline-flex items-center text-lg text-blue-600 hover:text-blue-800 font-medium">
-                            {{ Auth::guard('designer')->user()->portfolio_url }}
-                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        <div class="bg-white/20 p-3 rounded-xl mr-4 group-hover:bg-white/30 transition-colors">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                             </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Manage Designs</h3>
+                            <p class="text-blue-100 text-sm">Edit portfolio</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="{{ route('designer.orders') }}" class="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-6 rounded-2xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105 group">
+                    <div class="flex items-center">
+                        <div class="bg-white/20 p-3 rounded-xl mr-4 group-hover:bg-white/30 transition-colors">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">View Orders</h3>
+                            <p class="text-purple-100 text-sm">Track sales</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="{{ route('designer.profile') }}" class="bg-gradient-to-r from-orange-500 to-red-600 text-white p-6 rounded-2xl hover:shadow-2xl transition-all duration-200 transform hover:scale-105 group">
+                    <div class="flex items-center">
+                        <div class="bg-white/20 p-3 rounded-xl mr-4 group-hover:bg-white/30 transition-colors">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">Edit Profile</h3>
+                            <p class="text-orange-100 text-sm">Update info</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Design Management Section -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-8">
+                <div class="flex flex-col lg:flex-row gap-6">
+                    <!-- Search Bar -->
+                    <div class="flex-1">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                            </div>
+                            <input type="text" id="search-input" placeholder="Search your designs..." 
+                                   class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                    </div>
+                    
+                    <!-- Filter Options -->
+                    <div class="flex flex-wrap gap-4">
+                        <!-- Status Filter -->
+                        <select id="status-filter" class="px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="featured">Featured</option>
+                        </select>
+                        
+                        <!-- Category Filter -->
+                        <select id="category-filter" class="px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">All Categories</option>
+                            <option value="casual">Casual Wear</option>
+                            <option value="formal">Formal Wear</option>
+                            <option value="evening">Evening Wear</option>
+                            <option value="sports">Sports Wear</option>
+                            <option value="accessories">Accessories</option>
+                        </select>
+                        
+                        <!-- Sort Filter -->
+                        <select id="sort-filter" class="px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="popular">Most Popular</option>
+                        </select>
+                        
+                        <!-- Clear Filters -->
+                        <button id="clear-filters" class="px-6 py-3 text-gray-600 hover:text-blue-600 border border-gray-300 rounded-xl hover:border-blue-500 transition-colors">
+                            Clear All
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Designs Section -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Your Designs</h2>
+                    <div class="flex items-center space-x-4">
+                        <span id="results-count" class="text-gray-600">{{ $recentDesigns->count() }} designs</span>
+                        <div class="flex items-center space-x-2">
+                            <button id="grid-view" class="p-2 text-blue-600 bg-blue-100 rounded-lg">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/>
+                                </svg>
+                            </button>
+                            <button id="list-view" class="p-2 text-gray-400 hover:text-blue-600 rounded-lg">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Designs Container -->
+                <div id="designs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    @forelse($recentDesigns as $design)
+                    <div class="design-card bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100" 
+                         data-category="{{ strtolower($design->category ?? 'general') }}" 
+                         data-price="{{ $design->price }}" 
+                         data-created="{{ $design->created_at->timestamp }}"
+                         data-status="{{ $design->is_active ? 'active' : 'inactive' }}"
+                         data-featured="{{ $design->is_featured ? 'featured' : '' }}">
+                        
+                        <div class="relative aspect-square overflow-hidden">
+                            @if($design->image_url)
+                                <img src="{{ $design->image_url }}" alt="{{ $design->title }}" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            @else
+                                <div class="w-full h-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                            @endif
+                            
+                            <!-- Overlay Actions -->
+                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
+                                <div class="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <a href="{{ route('designer.designs.edit', $design) }}" class="bg-white text-gray-800 p-3 rounded-full hover:bg-gray-100 transition-colors">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                        </svg>
+                                    </a>
+                                    <button class="toggle-status-btn bg-white text-gray-800 p-3 rounded-full hover:bg-gray-100 transition-colors" 
+                                            data-design-id="{{ $design->id }}" 
+                                            data-status="{{ $design->is_active ? 'active' : 'inactive' }}">
+                                        @if($design->is_active)
+                                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                            </svg>
+                                        @else
+                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>
+                                            </svg>
+                                        @endif
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Status Badges -->
+                            <div class="absolute top-3 left-3 flex flex-col gap-1">
+                                @if($design->is_featured)
+                                    <span class="bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full">FEATURED</span>
+                                @endif
+                                @if($design->is_active)
+                                    <span class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">ACTIVE</span>
+                                @else
+                                    <span class="bg-gray-500 text-white text-xs font-bold px-2 py-1 rounded-full">INACTIVE</span>
+                                @endif
+                            </div>
+
+                            <!-- Sales Badge -->
+                            <div class="absolute top-3 right-3">
+                                @if($design->orders_count ?? 0 > 0)
+                                    <span class="bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-full">{{ $design->orders_count }} sold</span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="p-6">
+                            <div class="mb-3">
+                                <h3 class="text-lg font-bold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
+                                    <a href="{{ route('designer.designs.show', $design) }}">{{ $design->title }}</a>
+                                </h3>
+                                @if($design->category)
+                                    <span class="inline-block bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full mt-1">{{ $design->category }}</span>
+                                @endif
+                                <p class="text-sm text-gray-600 mt-2">Created {{ $design->created_at->diffForHumans() }}</p>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <div class="text-md font-bold text-blue-600">LKR{{ number_format($design->price, 2) }}</div>
+                                <div class="flex space-x-2">
+                                    <a href="{{ route('designer.designs.edit', $design) }}" 
+                                       class="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                                        Edit
+                                    </a>
+                                    <a href="{{ route('marketplace.design.show', $design) }}" target="_blank"
+                                       class="bg-gray-600 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors">
+                                        View
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @empty
+                    <div class="col-span-full text-center py-12">
+                        <svg class="w-24 h-24 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                        </svg>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">No designs yet</h3>
+                        <p class="text-gray-600 mb-4">Start creating your first design to showcase your talent</p>
+                        <a href="{{ route('designer.designs.create') }}" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 inline-flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Upload Your First Design
                         </a>
                     </div>
-                    @endif
-                    @if(Auth::guard('designer')->user()->bio)
-                    <div>
-                        <p class="text-sm font-medium text-gray-500 mb-2">Bio</p>
-                        <p class="text-gray-900 leading-relaxed">{{ Auth::guard('designer')->user()->bio }}</p>
-                    </div>
-                    @endif
+                    @endforelse
                 </div>
-                @endif
             </div>
+
+            <!-- Recent Orders Section -->
+            @if($recentOrders && $recentOrders->count() > 0)
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-gray-900">Recent Orders</h3>
+                    <a href="{{ route('designer.orders') }}" class="text-blue-600 hover:text-blue-700 font-medium text-sm">View All</a>
+                </div>
+                <div class="space-y-4">
+                    @foreach($recentOrders->take(5) as $order)
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900">{{ $order->design->title ?? 'Design' }}</p>
+                                <p class="text-sm text-gray-600">by {{ $order->buyer->name ?? 'Unknown Buyer' }}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-gray-900">LKR {{ number_format($order->total_amount ?? 0, 2) }}</p>
+                            <p class="text-sm text-gray-500">{{ $order->created_at->diffForHumans() }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
         </div>
     </div>
-</div>
-@endsection
+
+    <!-- JavaScript -->
+    <script>
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 ${
+                type === 'success' ? 'bg-green-500 text-white' :
+                type === 'error' ? 'bg-red-500 text-white' :
+                'bg-blue-500 text-white'
+            }`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Filter and Search functionality
+        function filterDesigns() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const statusFilter = document.getElementById('status-filter').value;
+            const categoryFilter = document.getElementById('category-filter').value;
+            const sortFilter = document.getElementById('sort-filter').value;
+            
+            let designs = Array.from(document.querySelectorAll('.design-card'));
+            let filteredDesigns = designs;
+
+            // Search filter
+            if (searchTerm) {
+                filteredDesigns = filteredDesigns.filter(design => {
+                    const title = design.querySelector('h3').textContent.toLowerCase();
+                    return title.includes(searchTerm);
+                });
+            }
+
+            // Status filter
+            if (statusFilter) {
+                filteredDesigns = filteredDesigns.filter(design => {
+                    if (statusFilter === 'featured') {
+                        return design.dataset.featured === 'featured';
+                    }
+                    return design.dataset.status === statusFilter;
+                });
+            }
+
+            // Category filter
+            if (categoryFilter) {
+                filteredDesigns = filteredDesigns.filter(design => {
+                    return design.dataset.category === categoryFilter;
+                });
+            }
+
+            // Sort designs
+            filteredDesigns.sort((a, b) => {
+                const priceA = parseFloat(a.dataset.price);
+                const priceB = parseFloat(b.dataset.price);
+                const createdA = parseInt(a.dataset.created);
+                const createdB = parseInt(b.dataset.created);
+
+                switch (sortFilter) {
+                    case 'price-low': return priceA - priceB;
+                    case 'price-high': return priceB - priceA;
+                    case 'oldest': return createdA - createdB;
+                    case 'newest': 
+                    default: return createdB - createdA;
+                }
+            });
+
+            // Hide all designs
+            designs.forEach(design => design.style.display = 'none');
+            
+            // Show filtered designs
+            filteredDesigns.forEach(design => design.style.display = 'block');
+
+            // Update results count
+            document.getElementById('results-count').textContent = `${filteredDesigns.length} designs`;
+        }
+
+        function clearAllFilters() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('status-filter').value = '';
+            document.getElementById('category-filter').value = '';
+            document.getElementById('sort-filter').value = 'newest';
+            filterDesigns();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Event listeners for filters
+            document.getElementById('search-input').addEventListener('input', filterDesigns);
+            document.getElementById('status-filter').addEventListener('change', filterDesigns);
+            document.getElementById('category-filter').addEventListener('change', filterDesigns);
+            document.getElementById('sort-filter').addEventListener('change', filterDesigns);
+            document.getElementById('clear-filters').addEventListener('click', clearAllFilters);
+
+            // Toggle status buttons
+            document.querySelectorAll('.toggle-status-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const designId = this.dataset.designId;
+                    const currentStatus = this.dataset.status;
+                    
+                    // TODO: Implement AJAX call to toggle status
+                    showNotification('Status toggle feature coming soon!', 'info');
+                });
+            });
+
+            // View toggle buttons
+            document.getElementById('grid-view').addEventListener('click', function() {
+                document.getElementById('designs-grid').className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6';
+                this.classList.add('text-blue-600', 'bg-blue-100');
+                this.classList.remove('text-gray-400');
+                document.getElementById('list-view').classList.add('text-gray-400');
+                document.getElementById('list-view').classList.remove('text-blue-600', 'bg-blue-100');
+            });
+
+            document.getElementById('list-view').addEventListener('click', function() {
+                document.getElementById('designs-grid').className = 'grid grid-cols-1 gap-4';
+                this.classList.add('text-blue-600', 'bg-blue-100');
+                this.classList.remove('text-gray-400');
+                document.getElementById('grid-view').classList.add('text-gray-400');
+                document.getElementById('grid-view').classList.remove('text-blue-600', 'bg-blue-100');
+            });
+        });
+    </script>
+</body>
+</html>

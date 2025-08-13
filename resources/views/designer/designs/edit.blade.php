@@ -62,7 +62,7 @@
                 <!-- Price -->
                 <div>
                     <label for="price" class="block text-sm font-medium text-gray-700 mb-2">
-                        Price ($) <span class="text-red-500">*</span>
+                        Price (LKR) <span class="text-red-500">*</span>
                     </label>
                     <input type="number" 
                            id="price" 

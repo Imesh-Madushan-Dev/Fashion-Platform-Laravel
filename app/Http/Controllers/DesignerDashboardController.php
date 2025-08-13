@@ -22,7 +22,16 @@ class DesignerDashboardController extends Controller
     {
         $designer = Auth::guard('designer')->user();
         
+        // Get recent designs
+        $recentDesigns = $designer->designs()
+            ->with('orders')
+            ->orderBy('created_at', 'desc')
+            ->take(6)
+            ->get();
+        
+        // Calculate statistics
         $designCount = $designer->designs()->count();
+        $activeDesigns = $designer->designs()->where('is_active', true)->count();
         $totalOrders = Order::whereHas('design', function ($query) use ($designer) {
             $query->where('designer_id', $designer->id);
         })->count();
@@ -31,7 +40,23 @@ class DesignerDashboardController extends Controller
             $query->where('designer_id', $designer->id);
         })->where('status', '!=', Order::STATUS_CANCELLED)->sum('total_amount');
 
-        return view('designer.dashboard', compact('designCount', 'totalOrders', 'totalRevenue'));
+        // Recent orders
+        $recentOrders = Order::with(['buyer', 'design'])
+            ->whereHas('design', function ($query) use ($designer) {
+                $query->where('designer_id', $designer->id);
+            })
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
+        return view('designer.dashboard', compact(
+            'designCount', 
+            'activeDesigns', 
+            'totalOrders', 
+            'totalRevenue', 
+            'recentDesigns', 
+            'recentOrders'
+        ));
     }
 
     /**

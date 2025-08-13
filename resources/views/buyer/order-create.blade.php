@@ -149,7 +149,7 @@
                             @endif
 
                             <div class="bg-gradient-to-r from-green-500 to-emerald-500 p-4 rounded-xl shadow-lg">
-                                <div class="text-2xl font-bold text-white mb-1">${{ number_format($design->price, 2) }}</div>
+                                <div class="text-xl font-bold text-white mb-1">LKR {{ number_format($design->price, 2) }}</div>
                                 <p class="text-green-100 text-sm font-medium">per unit</p>
                             </div>
                         </div>
@@ -208,7 +208,7 @@
                                         <div class="space-y-3">
                                             <div class="flex justify-between items-center py-2 border-b border-blue-200">
                                                 <span class="text-gray-700 font-medium">Unit Price:</span>
-                                                <span class="font-bold text-gray-900">${{ number_format($design->price, 2) }}</span>
+                                                <span class="font-bold text-gray-900">LKR {{ number_format($design->price, 2) }}</span>
                                             </div>
                                             <div class="flex justify-between items-center py-2 border-b border-blue-200">
                                                 <span class="text-gray-700 font-medium">Quantity:</span>
@@ -217,7 +217,7 @@
                                             <div class="bg-white rounded-xl p-4 shadow-sm">
                                                 <div class="flex justify-between items-center">
                                                     <span class="font-bold text-gray-900">Total Amount:</span>
-                                                    <span class="font-bold text-2xl text-blue-600" id="total-amount">${{ number_format($design->price, 2) }}</span>
+                                                    <span class="font-bold text-xl text-blue-600" id="total-amount">LKR {{ number_format($design->price, 2) }}</span>
                                                 </div>
                                             </div>
                                         </div>

@@ -173,7 +173,7 @@
                             <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ Str::limit($design->description, 80) }}</p>
                             
                             <div class="flex justify-between items-center mb-4">
-                                <span class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">${{ number_format($design->price, 2) }}</span>
+                                <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">LKR {{ number_format($design->price, 2) }}</span>
                                 @if($design->category)
                                     <span class="text-xs px-3 py-1 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 rounded-full font-medium">{{ $design->category }}</span>
                                 @endif

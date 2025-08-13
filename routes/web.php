@@ -8,6 +8,8 @@ use App\Http\Controllers\DesignerDashboardController;
 use App\Http\Controllers\BuyerDashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\MarketplaceController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +22,22 @@ use App\Http\Controllers\PaymentController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [MarketplaceController::class, 'welcome'])->name('welcome');
+
+// Public Marketplace Routes (no authentication required)
+Route::get('/marketplace', [MarketplaceController::class, 'index'])->name('marketplace.index');
+Route::get('/designs/{design}', [MarketplaceController::class, 'show'])->name('marketplace.design.show');
+
+// Public Cart Routes (no authentication required)
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/data', [CartController::class, 'getCartData'])->name('cart.data');
+
+// Cart Checkout Routes (buyer authentication required)
+Route::middleware('auth:buyer')->group(function () {
+    Route::post('/cart/checkout', [CartController::class, 'processCheckout'])->name('cart.checkout');
+    Route::get('/cart/payment', [CartController::class, 'showCartPayment'])->name('buyer.payment.cart');
+    Route::post('/cart/payment/process', [CartController::class, 'processCartPayment'])->name('buyer.payment.cart-process');
+    Route::get('/cart/payment/success', [CartController::class, 'showCartPaymentSuccess'])->name('buyer.payment.cart-success');
 });
 
 // Generic login route fallback - redirect to buyer login
