@@ -32,7 +32,7 @@
         @include('components.navigation')
 
         <!-- Hero Section -->
-        <section class="relative pt-24 pb-20 min-h-screen flex items-center overflow-hidden">
+        <section class="relative pt-24 pb-12 min-h-screen overflow-hidden">
             <!-- Background Image with Overlay -->
             <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-pink-900/20 to-indigo-900/20"></div>
             <div class="absolute inset-0 bg-hero-pattern"></div>
@@ -43,61 +43,106 @@
             <div class="absolute top-40 right-20 w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full opacity-20 animate-pulse delay-1000"></div>
             <div class="absolute bottom-40 left-20 w-12 h-12 bg-gradient-to-br from-pink-400 to-red-400 rounded-full opacity-20 animate-pulse delay-2000"></div>
             
-            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <div class="mb-8">
-                    <div class="inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full border border-purple-200 mb-6">
-                        <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
-                        <span class="text-sm font-medium text-gray-700">Live Fashion Marketplace</span>
+            <!-- Top Half - Text Content -->
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" style="height: 50vh;">
+                <div class="flex flex-col justify-center h-full">
+                    <div class="mb-6">
+                        <div class="inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full border border-purple-200 mb-4">
+                            <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                            <span class="text-sm font-medium text-gray-700">Live Fashion Marketplace</span>
+                        </div>
                     </div>
-                </div>
-                
-                <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-8 leading-tight">
-                    Where Fashion
-                    <span class="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent block">
-                        Dreams
-                    </span>
-                    <span class="text-5xl md:text-6xl lg:text-7xl">Come True</span>
-                </h1>
-                
-                <p class="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
-                    Connect talented fashion designers with buyers worldwide. Upload, discover, and purchase unique fashion designs in our exclusive marketplace.
-                </p>
-                
-                <div class="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-                    <a href="{{ route('marketplace.index') }}" class="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-10 py-5 rounded-2xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl">
-                        <span class="flex items-center justify-center">
-                            Browse Designs
-                            <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-                            </svg>
+                    
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+                        Where Fashion
+                        <span class="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent block">
+                            Dreams Come True
                         </span>
-                    </a>
-                    <a href="{{ url('/designer/register') }}" class="group bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-10 py-5 rounded-2xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl">
-                        <span class="flex items-center justify-center">
-                            Start as Designer
-                            <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                            </svg>
-                        </span>
-                    </a>
-                </div>
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+                        Connect talented fashion designers with buyers worldwide. Upload, discover, and purchase unique fashion designs.
+                    </p>
+                    
+                    <!-- <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                        <a href="{{ route('marketplace.index') }}" class="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl">
+                            <span class="flex items-center justify-center">
+                                Browse Designs
+                                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                                </svg>
+                            </span>
+                        </a>
+                        <a href="{{ url('/designer/register') }}" class="group bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl">
+                            <span class="flex items-center justify-center">
+                                Start as Designer
+                                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                </svg>
+                            </span>
+                        </a>
+                    </div> -->
 
-                <!-- Hero Stats with Enhanced Design -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
-                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                        <div class="text-5xl font-bold bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent mb-3">{{ $stats['designers_count'] ?? 0 }}+</div>
-                        <div class="text-gray-600 font-medium">Fashion Designers</div>
-                        <div class="w-12 h-1 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full mx-auto mt-3"></div>
+                   
+                </div>
+            </div>
+
+            <!-- Bottom Half - Banner Slider -->
+            <div class="relative" style="height: 50vh;">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+                    <!-- Banner Title -->
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Latest Offers</h2>
+                        <div class="w-24 h-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full mx-auto"></div>
                     </div>
-                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                        <div class="text-5xl font-bold bg-gradient-to-r from-pink-600 to-pink-700 bg-clip-text text-transparent mb-3">{{ $stats['designs_count'] ?? 0 }}+</div>
-                        <div class="text-gray-600 font-medium">Unique Designs</div>
-                        <div class="w-12 h-1 bg-gradient-to-r from-pink-600 to-pink-700 rounded-full mx-auto mt-3"></div>
-                    </div>
-                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                        <div class="text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mb-3">{{ $stats['buyers_count'] ?? 0 }}+</div>
-                        <div class="text-gray-600 font-medium">Happy Buyers</div>
-                        <div class="w-12 h-1 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full mx-auto mt-3"></div>
+
+                    <!-- Banner Slider Container -->
+                    <div class="relative width-auto h-96 overflow-hidden rounded-3xl shadow-2xl">
+                        <div id="banner-slider" class="flex transition-transform duration-500 ease-in-out h-full">
+                            <div class="min-w-full h-full relative">
+                                <img src="{{ asset('banners/1.png') }}" alt="Fashion Banner 1" class="w-full h-full object-cover">
+                               
+                                <div class="absolute bottom-6 left-6 text-white">
+                                    <h3 class="text-2xl font-bold mb-2">Summer Collection 2024</h3>
+                                    <p class="text-lg opacity-90">Discover trending summer designs</p>
+                                </div>
+                            </div>
+                            <div class="min-w-full h-full relative">
+                                <img src="{{ asset('banners/2.png') }}" alt="Fashion Banner 2" class="w-full h-full object-cover">
+                             
+                                <div class="absolute bottom-6 left-6 text-white">
+                                    <h3 class="text-2xl font-bold mb-2">Designer Spotlight</h3>
+                                    <p class="text-lg opacity-90">Featured creations by top designers</p>
+                                </div>
+                            </div>
+                            <div class="min-w-full h-full relative">
+                                <img src="{{ asset('banners/3.png') }}" alt="Fashion Banner 3" class="w-full h-full object-cover">
+
+                                <div class="absolute bottom-6 left-6 text-white">
+                                    <h3 class="text-2xl font-bold mb-2">Special Offers</h3>
+                                    <p class="text-lg opacity-90">Up to 50% off on selected designs</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Dots -->
+                        <div class="absolute bottom-4 right-6 flex space-x-2">
+                            <button class="banner-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors duration-200" data-slide="0"></button>
+                            <button class="banner-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors duration-200" data-slide="1"></button>
+                            <button class="banner-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors duration-200" data-slide="2"></button>
+                        </div>
+
+                        <!-- Navigation Arrows -->
+                        <button id="prev-banner" class="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 rounded-full flex items-center justify-center transition-colors duration-200">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                        </button>
+                        <button id="next-banner" class="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 rounded-full flex items-center justify-center transition-colors duration-200">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -767,10 +812,97 @@
 
             // Profile dropdown functionality handled by Alpine.js
 
+            // Banner Slider functionality
+            let currentSlide = 0;
+            const totalSlides = 3;
+            let bannerInterval;
+
+            function updateBannerSlider() {
+                const slider = document.getElementById('banner-slider');
+                const dots = document.querySelectorAll('.banner-dot');
+                
+                if (slider) {
+                    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+                    
+                    dots.forEach((dot, index) => {
+                        if (index === currentSlide) {
+                            dot.classList.add('bg-white');
+                            dot.classList.remove('bg-white/50');
+                        } else {
+                            dot.classList.add('bg-white/50');
+                            dot.classList.remove('bg-white');
+                        }
+                    });
+                }
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateBannerSlider();
+            }
+
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                updateBannerSlider();
+            }
+
+            function goToSlide(slideIndex) {
+                currentSlide = slideIndex;
+                updateBannerSlider();
+            }
+
+            function startBannerSlideshow() {
+                bannerInterval = setInterval(nextSlide, 4000);
+            }
+
+            function stopBannerSlideshow() {
+                clearInterval(bannerInterval);
+            }
+
             // Add event listeners to cart buttons
             document.addEventListener('DOMContentLoaded', function() {
                 updateCartCount();
                 updateWishlistIcons();
+                
+                // Initialize banner slider
+                updateBannerSlider();
+                startBannerSlideshow();
+
+                // Banner navigation event listeners
+                const nextBtn = document.getElementById('next-banner');
+                const prevBtn = document.getElementById('prev-banner');
+                const dots = document.querySelectorAll('.banner-dot');
+                const sliderContainer = document.querySelector('.relative.h-80');
+
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        stopBannerSlideshow();
+                        nextSlide();
+                        startBannerSlideshow();
+                    });
+                }
+
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        stopBannerSlideshow();
+                        prevSlide();
+                        startBannerSlideshow();
+                    });
+                }
+
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        stopBannerSlideshow();
+                        goToSlide(index);
+                        startBannerSlideshow();
+                    });
+                });
+
+                // Pause slideshow on hover
+                if (sliderContainer) {
+                    sliderContainer.addEventListener('mouseenter', stopBannerSlideshow);
+                    sliderContainer.addEventListener('mouseleave', startBannerSlideshow);
+                }
 
                 // Add to cart buttons
                 document.querySelectorAll('.add-to-cart-btn').forEach((btn) => {
